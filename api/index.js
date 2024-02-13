@@ -24,14 +24,8 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'))
 app.use(cors({
     credentials: true,
-    origin: 'http://127.0.0.1:5173',
+    origin: 'http://localhost:5173',
 }));
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
 
 
 
