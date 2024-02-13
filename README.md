@@ -3,7 +3,7 @@ Hoteli is a web application that connects individuals with unique accommodations
 
 Technologies:
 Frontend: React, React Router DOM, Tailwind CSS
-Backend: Node.js, Express, MongoDB
+Backend: Node.js, Express, MongoDB, AWS_CLOUD_SERVER
 Additional Tools: Vite (bundler), Mongoose (ODM), JWT (authentication)
 Getting Started:
 Clone the repository:
