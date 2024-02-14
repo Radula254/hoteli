@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "api": "nodemon index.js"
-  },
+    "api": "nodemon index.js",
+    "server": "http://localhost:4000"
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",

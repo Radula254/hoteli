@@ -5,3 +5,6 @@ Content-Type: application/json
     "email": "test2@gmail.com",
     "password": "test2"
 }
+
+###
+GET http://localhost:4000/api/places

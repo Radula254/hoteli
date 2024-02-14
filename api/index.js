@@ -93,7 +93,7 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
-app.get('/profile', (req, res) => {
+app.get('/api/profile', (req, res) => {
     mongoose.connect(process.env.MONGO_URL);
     const {token} = req.cookies;
     if (token) {
