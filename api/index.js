@@ -24,9 +24,7 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'))
 app.use(cors({
     credentials: true,
-    methods: ['GET', 'POST', 'PUT'],
     origin: 'http://localhost:5173',
-    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 
@@ -220,6 +218,12 @@ app.get('/api/bookings', async (req, res) => {
     res.json( await Booking.find({user:userData.id}).populate('place') );
 });
 
-app.listen(4000, () => {
-    console.log('Server running on Port 4000');
-});
+
+
+if (process.env.API_PORT) {
+    app.listen(process.env.API_PORT, () => {
+        console.log('Server running on Port 4000');
+    });
+}
+
+module.exports = app;
