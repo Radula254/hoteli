@@ -17,6 +17,7 @@ const Booking = require('./models/Booking');
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
+const Secret = 'JBDVCY87EGWBHa78uheuiA8UHYXW8ghxuiba'
 const bucket = process.env.BUCKET_NAME;
 
 app.use(express.json());
@@ -52,7 +53,7 @@ async function uploadToS3(path, originalFilename, mimetype) {
 
 function getUserDataFromReq(req) {
     return new Promise((resolve, reject) => {
-        jwt.verify(req.cookies.token, process.env.SECRET, {}, async (err, userData) => {
+        jwt.verify(req.cookies.token, Secret, {}, async (err, userData) => {
             if (err) throw err;
             resolve(userData);
         });
@@ -80,7 +81,7 @@ app.post('/api/login', async (req, res) => {
     if (userDoc) {
         const passOk = bcrypt.compareSync(password, userDoc.password);
         if (passOk) {
-            jwt.sign({email:userDoc.email, id:userDoc._id, name:userDoc.name},  process.env.SECRET, {}, (err,token) => {
+            jwt.sign({email:userDoc.email, id:userDoc._id, name:userDoc.name},  Secret, {}, (err,token) => {
                 if (err) throw err;
                 res.cookie('token', token).json(userDoc);
             });
@@ -96,7 +97,7 @@ app.get('/api/profile', (req, res) => {
     mongoose.connect(process.env.MONGO_URL);
     const {token} = req.cookies;
     if (token) {
-        jwt.verify(token, process.env.SECRET, {}, (err, user) => {
+        jwt.verify(token, Secret, {}, (err, user) => {
             if (err) throw err;
             res.json(user);
         })
@@ -140,7 +141,7 @@ app.post('/api/places', (req, res) => {
         description,perks,extraInfo,
         checkIn,checkOut,maxGuests,price,
     } = req.body;
-    jwt.verify(token, process.env.SECRET, {}, async (err, userData) => {
+    jwt.verify(token, Secret, {}, async (err, userData) => {
         if (err) throw err;
         const placeDoc = await Place.create({
             owner: userData.id,
@@ -155,7 +156,7 @@ app.post('/api/places', (req, res) => {
 app.get('/api/user-places', (req, res) => {
     mongoose.connect(process.env.MONGO_URL);
     const {token} = req.cookies;
-    jwt.verify(token, process.env.SECRET, {}, async (err, userData) => {
+    jwt.verify(token, Secret, {}, async (err, userData) => {
         const {id} = userData;
         res.json( await Place.find({owner:id}))
     });
@@ -175,7 +176,7 @@ app.put('/api/places', async (req, res) => {
         description,perks,extraInfo,
         checkIn,checkOut,maxGuests,price,
     } = req.body;
-    jwt.verify(token, process.env.SECRET, {}, async (err, userData) => {
+    jwt.verify(token, Secret, {}, async (err, userData) => {
         const placeDoc = await Place.findById(id);
         if (userData.id === placeDoc.owner.toString()) {
             placeDoc.set({
