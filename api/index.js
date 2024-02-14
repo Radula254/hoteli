@@ -19,14 +19,22 @@ const app = express();
 const bcryptSalt = bcrypt.genSaltSync(10);
 const Secret = 'JBDVCY87EGWBHa78uheuiA8UHYXW8ghxuiba'
 const bucket = process.env.BUCKET_NAME;
+const allowedOrigins = ['http://localhost:5173', 'https://hoteli-web.vercel.app'];
 
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'))
 app.use(cors({
-    credentials: true,
-    origin: 'http://localhost:5173',
-}));
+    origin: function(origin, callback) {
+      // Check if the request origin is allowed
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  }));
+  
 
 
 
