@@ -2,12 +2,28 @@
     "buildCommand": "cd client && npm install && npm run build",
     "outputDirectory": "client/dist",
     "framework": "vite",
+    "builds": [
+        {
+          "src": "./index.js",
+          "use": "@vercel/node"
+        }
+      ],
     "rewrites": [
         {
             "source": "/api/(.*)",
             "destination": "/api/index.js"
         }
     ],
+    "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "./index.js",
+          "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+          "headers": {
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      ],
     "headers": [
         {
           "source": "/(.*)",
