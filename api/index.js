@@ -19,7 +19,7 @@ const app = express();
 const bcryptSalt = bcrypt.genSaltSync(10);
 const Secret = 'JBDVCY87EGWBHa78uheuiA8UHYXW8ghxuiba'
 const bucket = process.env.BUCKET_NAME;
-const allowedOrigins = ['http://localhost:5173', 'https://hoteli-web.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://hoteli-sable.vercel.app'];
 
 app.use(express.json());
 app.use(cookieParser());
@@ -36,7 +36,7 @@ app.use(cors({
   }));
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Origin','https://hoteli-sable.vercel.app');
     res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
     next();
